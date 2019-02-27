@@ -2,6 +2,20 @@
 
 A very simple plugin for v3 of the [Vue CLI](https://cli.vuejs.org/) to set up a project to build as a [Cordova](https://cordova.apache.org/) app.
 
+## Prerequisites
+
+You need to have v3+ of the Vue CLI installed:
+
+```
+npm install -g @vue/cli
+```
+
+If you do not have an existing project, then you will need to create one:
+
+```
+vue create project-name
+```
+
 ## Installation
 
 In your project root, run the command below. You will be prompted to enter an app name and bundle ID.
