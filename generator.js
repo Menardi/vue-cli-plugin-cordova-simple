@@ -20,7 +20,7 @@ module.exports = async (api, options, rootOptions) => {
     });
 
     // Create a temporary directory and create a blank Cordova project in it
-    const tmpDir = fs.mkdtempSync(os.tmpdir());
+    const tmpDir = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
 
     // await cordova.create(tmpDir, options.bundleId, options.name);
     spawnSync(path.join('node_modules', '.bin', 'cordova'), ['create', tmpDir, options.bundleId, options.name]);
