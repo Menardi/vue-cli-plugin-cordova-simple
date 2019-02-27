@@ -1,6 +1,6 @@
 {
   "name": "vue-cli-plugin-cordova-simple",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Plugin for Vue CLI v3 projects to use Cordova",
   "main": "index.js",
   "keywords": [
