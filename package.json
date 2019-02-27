@@ -11,10 +11,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "fs-extra": "^7.0.1"
+  },
   "dependencies": {
-    "cordova": "^8.0.0",
-    "rimraf": "^2.6.2"
+    "cordova": "^8.0.0"
   },
   "repository": {
     "type": "git",

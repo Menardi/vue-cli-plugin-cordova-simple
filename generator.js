@@ -1,8 +1,6 @@
-const cordova = require('cordova');
-const fs = require('fs');
+const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
-const rimraf = require('rimraf');
 const spawnSync = require('child_process').spawnSync;
 
 const gitIgnoreAdditions = ['# Cordova (added by vue-cli-plugin-cordova-simple)', 'platforms', 'plugins', 'www'];
@@ -19,19 +17,6 @@ module.exports = async (api, options, rootOptions) => {
         }
     });
 
-    // Create a temporary directory and create a blank Cordova project in it
-    const tmpDir = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
-
-    // await cordova.create(tmpDir, options.bundleId, options.name);
-    spawnSync(path.join('node_modules', '.bin', 'cordova'), ['create', tmpDir, options.bundleId, options.name]);
-
-    // Remove the package.json since we already have one in the Vue project
-    fs.unlinkSync(path.join(tmpDir, 'package.json'));
-    rimraf.sync(path.join(tmpDir, 'www'));
-
-    // Copy the remaining files into the Vue project
-    api.render(tmpDir);
-
     // Add Cordova things to .gitignore if it does not have them
     api.postProcessFiles(files => {
         if(files['.gitignore']) {
@@ -45,8 +30,24 @@ module.exports = async (api, options, rootOptions) => {
         }
     });
 
-    // Get rid of the temporary directory
-    api.onCreateComplete(() => rimraf.sync(tmpDir));
+    // Called once the dependencies have been installed
+    api.onCreateComplete(() => {
+        const tmpDir = fs.mkdtempSync(`${os.tmpdir()}${path.sep}`);
+
+        // Create a blank Cordova project
+        spawnSync(path.join('node_modules', '.bin', 'cordova'), ['create', tmpDir, options.bundleId, options.name]);
+
+        // Remove the package.json since we already have one in the Vue project
+        fs.unlinkSync(path.join(tmpDir, 'package.json'));
+
+        // Remove www folder, which is just Cordova's example project
+        fs.removeSync(path.join(tmpDir, 'www'));
+
+        fs.copySync(tmpDir, api.resolve('.'));
+
+        // Remove the temp folder, it's no longer needed
+        fs.removeSync(tmpDir);
+    });
 
     api.exitLog(
         'Before adding Cordova platforms, ensure your project is built:\n\n' +
