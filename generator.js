@@ -9,7 +9,7 @@ module.exports = async (api, options, rootOptions) => {
     // Update the Vue project's dependencies to include Cordova
     api.extendPackage({
         devDependencies: {
-            cordova: '^8.0.0'
+            cordova: '^9.0.0'
         },
         scripts: {
             'build-app': 'npm run build && cordova build',

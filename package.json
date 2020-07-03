@@ -12,10 +12,10 @@
     "access": "public"
   },
   "devDependencies": {
-    "fs-extra": "^7.0.1"
+    "fs-extra": "^9.0.1"
   },
   "dependencies": {
-    "cordova": "^8.0.0"
+    "cordova": "^9.0.0"
   },
   "repository": {
     "type": "git",
